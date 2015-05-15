@@ -18,8 +18,18 @@ def load_ipython_extension(ipython):
 
     global cluster, session
 
-    cluster = Cluster()
-    session = cluster.connect()
+    try:
+        DB1 = os.getenv('DB1')
+        DB2 = os.getenv('DB2')
+        DB3 = os.getenv('DB3')
+        KEYSPACE = os.genenv('KEYSPACE')
+    except Exception, e:
+        sys.stderr.write("\n### Make Sure DB1 is set {e} ###\n".format(e=e))
+        sys.exit(1)
+    CASSANDRA_NODES = [DB1, DB2, DB3]
+   
+    cluster = Cluster(CASSANDRA_NODES)
+    session = cluster.connect(KEYSPACE)
     session.row_factory = ordered_dict_factory
 
     ipython.register_magics(CQLMagic)
