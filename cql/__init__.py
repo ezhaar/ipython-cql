@@ -3,6 +3,8 @@ from IPython.config.configurable import Configurable
 from cassandra.cluster import Cluster
 from cassandra.query import ordered_dict_factory, SimpleStatement
 from prettytable import PrettyTable
+import sys
+import os
 
 try:
     import numpy as np
